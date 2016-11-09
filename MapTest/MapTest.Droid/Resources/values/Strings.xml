@@ -2,4 +2,5 @@
 <resources>
 	<string name="hello">Hello World, Click Me!</string>
 	<string name="app_name">MapTest.Droid</string>
+  <string name="style_mapbox_streets">mapbox://styles/babri/civ8a51l6009e2ilcz7e3zrr2</string>
 </resources>

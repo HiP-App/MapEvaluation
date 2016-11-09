@@ -4,11 +4,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<Button  
-    android:id="@+id/myButton"
-    android:layout_width="match_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
+  <Button
+      android:id="@+id/myButton"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/hello"
     />
+  <com.mapbox.mapboxsdk.maps.MapView
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mapView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    mapbox:access_token="pk.eyJ1IjoiYmFicmkiLCJhIjoiY2l2ODl6N3BzMDAwbTJvbGE2b3FiMXRscCJ9._a0ST4l5EzVGEKoyUTUaBA"
+    mapbox:style_url="@string/style_mapbox_streets"/>
 </LinearLayout>
 
