@@ -61,57 +61,34 @@ namespace MapTest.Droid
                 .SetSnippet ("This is another test")
                 .SetPosition(new LatLng(51.7189205, 8.7575093)));
             map.OnInfoWindowClickListener = this;
-            
-            /*
-            using (var stream = new FileInfo (@"mnt/shared/TMP/map_01.pbf").OpenRead ())
-            {
-                var geoJson = MyClass.Do (stream);
 
-                var list = BuildIt (geoJson);
-                map.AddPolyline (new PolylineOptions ()
-                                     .SetColor(Color.ParseColor("#3bb2d0"))
-                                     .SetWidth(2)
-                                     .AddAll (list));
-            }*/
+            var fileInfo = new FileInfo (@"mnt/shared/TMP/map_01.pbf");
+            if (fileInfo.Exists)
+            {
+                AddRoute (fileInfo, map);
+            }
+            
+
         }
 
-        private IIterable BuildIt(string geoJson)
+        private void AddRoute (FileInfo fileInfo, MapboxMap map)
         {
-
-            List<LatLng> points = new List<LatLng>();
-
-            try
+            using (var stream = fileInfo.OpenRead())
             {
-                // Parse JSON
-                JSONObject json = new JSONObject(geoJson);
-                JSONArray features = json.GetJSONArray("features");
-                JSONObject feature = features.GetJSONObject(0);
-                JSONObject geometry = feature.GetJSONObject("geometry");
-                if (geometry != null)
-                {
-                    string type = geometry.GetString("type");
-
-                    // Our GeoJSON only has one feature: a line string
-                    if (!TextUtils.IsEmpty(type) && type.Equals("LineString",StringComparison.InvariantCultureIgnoreCase ))
-                    {
-
-                        // Get the Coordinates
-                        JSONArray coords = geometry.GetJSONArray("coordinates");
-                        for (int lc = 0; lc < coords.Length (); lc++)
-                        {
-                            JSONArray coord = coords.GetJSONArray(lc);
-                            LatLng latLng = new LatLng(coord.GetDouble(1), coord.GetDouble(0));
-                            points.Add(latLng);
-                        }
-                    }
-                }
+                MyClass.Do(stream);
             }
-            catch (Exception exception)
+
+            var list = new List<LatLng>();
+            foreach (var w in MyClass.Locations)
             {
-                System.Console.WriteLine("Exception Loading GeoJSON: " + exception.Message);
+                var point = new LatLng(w.Latitude, w.Longitude);
+                list.Add(point);
             }
-            Java.Util.ArrayList al = new Java.Util.ArrayList(points); 
-            return al;
+
+            map.AddPolyline(new PolylineOptions()
+                                 .SetColor(Color.Blue)
+                                 .SetWidth(5f)
+                                 .Add(list.ToArray()));
         }
 
         protected override void OnPause()
@@ -148,7 +125,8 @@ namespace MapTest.Droid
         public bool OnInfoWindowClick(Marker marker)
         {
             Dialog d = new Dialog (this);
-            d.SetTitle ("Test");
+            
+            d.SetTitle ("Click on: " + marker.Title);
             d.Show ();
           
             return true;

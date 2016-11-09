@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using Mapbox;
 using UIKit;
 
 namespace MapTest.iOS
@@ -17,9 +18,11 @@ namespace MapTest.iOS
 
 		public override bool FinishedLaunching (UIApplication application, NSDictionary launchOptions)
 		{
-			// Override point for customization after application launch.
-			// If not required for your application you can safely delete this method
-			return true;
+            // Override point for customization after application launch.
+            // If not required for your application you can safely delete this method
+
+            AccountManager.AccessToken = "pk.eyJ1IjoiYmFicmkiLCJhIjoiY2l2ODl6N3BzMDAwbTJvbGE2b3FiMXRscCJ9._a0ST4l5EzVGEKoyUTUaBA";
+            return true;
 		}
 
 		public override void OnResignActivation (UIApplication application)
