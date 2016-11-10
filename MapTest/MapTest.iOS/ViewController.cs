@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using MapKit;
 using CoreLocation;
 using UIKit;
@@ -13,7 +14,6 @@ namespace MapTest.iOS {
 
         int count = 1;
         MKMapView map;
-        MapDelegate mapDelegate;
         private CLLocationManager locationManager;
         private IList<CLLocationCoordinate2D> routePoints;
 
@@ -35,54 +35,40 @@ namespace MapTest.iOS {
             base.ViewDidLoad ();
 
             //map - should be switched with separate reusable map view /OSMMapView/
-            MapViewDelegate mapDelegate = new MapViewDelegate();
+            MapViewDelegate mapDelegate = new MapViewDelegate ();
             map.Delegate = mapDelegate;
 
             string template = "http://tile.openstreetmap.org/{z}/{x}/{y}.png";
-            MKTileOverlay overlay = new MKTileOverlay(template);
+            MKTileOverlay overlay = new MKTileOverlay (template);
             overlay.CanReplaceMapContent = true;
-            map.AddOverlay(overlay, MKOverlayLevel.AboveLabels);
+            map.AddOverlay (overlay, MKOverlayLevel.AboveLabels);
 
             // Center the map, for development purposes
             MKCoordinateRegion region = map.Region;
             region.Span.LatitudeDelta = 0.05;
             region.Span.LongitudeDelta = 0.05;
-            region.Center = new CLLocationCoordinate2D(51.7166700, 8.7666700);
+            region.Center = new CLLocationCoordinate2D (51.7166700, 8.7666700);
             map.Region = region;
 
             // Disable rotation programatically because value of designer is somehow ignored
             map.RotateEnabled = false;
 
-            /*map.MapType = MKMapType.Standard;
-            map.ShowsUserLocation = true;
-            map.ZoomEnabled = true;
-            map.ScrollEnabled = true;
-            double lat = 51.72070116;
-            double lon = 8.74880791;
-            CLLocationCoordinate2D mapCenter = new CLLocationCoordinate2D (lat, lon);
-            MKCoordinateRegion mapRegion = MKCoordinateRegion.FromDistance (mapCenter, 100, 100);
-            map.CenterCoordinate = mapCenter;
-            map.Region = mapRegion;
-            mapDelegate = new MapViewDelegate ();
-            map.Delegate = mapDelegate;
-            map.AddAnnotations (new ConferenceAnnotation ("Evolve Conference", mapCenter));*/
+            Assembly assembly = Assembly.GetExecutingAssembly ();
+            Stream file = assembly.GetManifestResourceStream ("MapTest.iOS.Resources.map_01.pbf");
 
-          /*  using (var stream = new FileInfo(@"mnt/shared/TMP/map_01.pbf").OpenRead())
-            {
-                MyClass.Do(stream);
-            }
+            MyClass.Do (file);
+
 
             foreach (GeoLocation w in MyClass.locations)
             {
-                var point = new CLLocationCoordinate2D(w.latitude, w.longitude);
-                routePoints.Add(point);
+                var point = new CLLocationCoordinate2D (w.latitude, w.longitude);
+                routePoints.Add (point);
             }
-
 
 
             MKPolygon hotelOverlay = MKPolygon.FromCoordinates (routePoints.ToArray ());
 
-            map.AddOverlay (hotelOverlay);*/
+            map.AddOverlay (hotelOverlay);
 
             if (UIDevice.CurrentDevice.CheckSystemVersion (8, 0))
             {
@@ -99,15 +85,13 @@ namespace MapTest.iOS {
     }
 
 
-    class MapViewDelegate : MKMapViewDelegate
-    {
+    class MapViewDelegate : MKMapViewDelegate {
 
-
-        public override MKOverlayRenderer OverlayRenderer(MKMapView mapView, IMKOverlay overlay)
+        public override MKOverlayRenderer OverlayRenderer (MKMapView mapView, IMKOverlay overlay)
         {
             if (overlay is MKTileOverlay)
             {
-                var renderer = new MKTileOverlayRenderer((MKTileOverlay)overlay);
+                var renderer = new MKTileOverlayRenderer ((MKTileOverlay) overlay);
                 return renderer;
             }
             else
@@ -115,5 +99,16 @@ namespace MapTest.iOS {
                 return null;
             }
         }
+
+        public override MKOverlayView GetViewForOverlay (MKMapView mapView, IMKOverlay overlay)
+        {
+            // return a view for the polygon
+            MKPolygon polygon = overlay as MKPolygon;
+            MKPolygonView polygonView = new MKPolygonView (polygon);
+            polygonView.FillColor = UIColor.Blue;
+            polygonView.StrokeColor = UIColor.Red;
+            return polygonView;
+        }
+
     }
 }

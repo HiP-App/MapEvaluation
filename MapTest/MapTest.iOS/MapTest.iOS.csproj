@@ -135,6 +135,7 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
+    <EmbeddedResource Include="Resources\map_01.pbf" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConferenceAnnotation.cs" />

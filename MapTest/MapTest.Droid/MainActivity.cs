@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
@@ -52,10 +53,15 @@ namespace MapTest.Droid {
 
             mapView.Invalidate ();
 
-            using (var stream = new FileInfo (@"mnt/shared/TMP/map_01.pbf").OpenRead ())
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Stream file = assembly.GetManifestResourceStream("MapTest.Droid.Resources.map_01.pbf");
+
+            MyClass.Do (file);
+
+           /* using (var stream = new FileInfo (@"mnt/shared/TMP/map_01.pbf").OpenRead ())
             {
                 MyClass.Do (stream);
-            }
+            }*/
 
 
             foreach (GeoLocation w in MyClass.locations)
