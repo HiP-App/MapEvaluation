@@ -65,6 +65,7 @@ namespace MapTest.iOS {
                 routePoints.Add (point);
             }
 
+            //SHOULD WORK UNTIL HERE MAYBE DRAWING THE POLYGON IS NOT WORKING BECAUSE OF MISSING iOS SKILLS
 
             MKPolygon hotelOverlay = MKPolygon.FromCoordinates (routePoints.ToArray ());
 
