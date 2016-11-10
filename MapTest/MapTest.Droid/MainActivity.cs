@@ -6,6 +6,9 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Mapsui;
+using Mapsui.Geometries;
+using Mapsui.UI.Android;
 
 namespace MapTest.Droid
 {
@@ -29,11 +32,15 @@ namespace MapTest.Droid
 	            button.Text = string.Format ("{0} clicks!", count++);
 	        };
 
-	        using (var stream = new FileInfo (@"mnt/shared/TMP/map_01.pbf").OpenRead ())
+            var mapControl = FindViewById<MapControl>(Resource.Id.mapcontrol);
+            mapControl.Map = CommonMap.CreateMap();
+
+            using (var stream = new FileInfo (@"mnt/shared/TMP/map_01.pbf").OpenRead ())
 	        {
                 MyClass.Do (stream);
 	        }
-	    }
+            mapControl.Map.Viewport.Center = new Point(3, 3);
+        }
 
 	}
 }

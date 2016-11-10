@@ -10,5 +10,9 @@
     android:layout_height="wrap_content" 
     android:text="@string/hello"
     />
+  <Mapsui.UI.Android.MapControl
+        android:id="@+id/mapcontrol"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
 
