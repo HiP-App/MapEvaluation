@@ -36,12 +36,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Itinero, Version=0.28.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Itinero.0.28.3-rc1\lib\portable-net40+sl4+win8+wp7\Itinero.dll</HintPath>
+    <Reference Include="Itinero, Version=0.29.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Itinero.0.29.3-rc1\lib\portable-net40+sl4+win8+wp7\Itinero.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Itinero.IO.Osm, Version=0.28.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Itinero.IO.Osm.0.28.3-rc1\lib\portable-net40+sl4+win8+wp7\Itinero.IO.Osm.dll</HintPath>
+    <Reference Include="Itinero.IO.Osm, Version=0.29.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Itinero.IO.Osm.0.29.3-rc1\lib\portable-net40+sl4+win8+wp7\Itinero.IO.Osm.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OsmSharp, Version=5.0.2.0, Culture=neutral, processorArchitecture=MSIL">

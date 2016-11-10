@@ -61,6 +61,24 @@
     <MtouchDebug>true</MtouchDebug>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Itinero, Version=0.29.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Itinero.0.29.3-rc1\lib\netstandard1.3\Itinero.dll</HintPath>
+    </Reference>
+    <Reference Include="Itinero.IO.Osm, Version=0.29.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Itinero.IO.Osm.0.29.3-rc1\lib\netstandard1.6\Itinero.IO.Osm.dll</HintPath>
+    </Reference>
+    <Reference Include="OsmSharp">
+      <HintPath>..\..\packages\OsmSharp.5.0.2-rc1\lib\netstandard1.3\OsmSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\..\packages\protobuf-net.2.0.0.668\lib\netcore45\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="Reminiscence, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Reminiscence.1.0.5\lib\netstandard1.3\Reminiscence.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -138,10 +156,8 @@
     <EmbeddedResource Include="Resources\map_01.pbf" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConferenceAnnotation.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="MapDelegate.cs" />
     <Compile Include="ViewController.cs" />
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>

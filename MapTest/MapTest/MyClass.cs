@@ -4,6 +4,7 @@ using System.IO;
 using Itinero;
 using Itinero.IO.Osm;
 using Itinero.LocalGeo;
+using Itinero.Logging;
 using Itinero.Osm.Vehicles;
 
 namespace MapTest
@@ -17,9 +18,8 @@ namespace MapTest
         {
             var routerDb = new RouterDb();
             var router = new Router(routerDb);
-            
-            routerDb.LoadOsmData(stream, Vehicle.Pedestrian);
 
+            routerDb.LoadOsmData (stream, Vehicle.Pedestrian);
             // calculate a route.
             var route = router.Calculate(Vehicle.Pedestrian.Fastest(),
                 51.72070116f, 8.74880791f, 51.71584899f, 8.75824928f);

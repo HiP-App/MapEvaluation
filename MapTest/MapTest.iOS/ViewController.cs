@@ -6,8 +6,6 @@ using System.Reflection;
 using MapKit;
 using CoreLocation;
 using UIKit;
-using CoreGraphics;
-using MapDemo;
 
 namespace MapTest.iOS {
     public partial class ViewController : UIViewController {
