@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using MapKit;
 using CoreLocation;
+using Foundation;
 using UIKit;
 
 namespace MapTest.iOS {
@@ -32,14 +33,11 @@ namespace MapTest.iOS {
         {
             base.ViewDidLoad ();
 
-            //map - should be switched with separate reusable map view /OSMMapView/
-            MapViewDelegate mapDelegate = new MapViewDelegate ();
-            map.Delegate = mapDelegate;
-
+            map.OverlayRenderer = OverlayRenderer;
             string template = "http://tile.openstreetmap.org/{z}/{x}/{y}.png";
             MKTileOverlay overlay = new MKTileOverlay (template);
             overlay.CanReplaceMapContent = true;
-            map.AddOverlay (overlay, MKOverlayLevel.AboveLabels);
+            map.AddOverlay (overlay);
 
             // Center the map, for development purposes
             MKCoordinateRegion region = map.Region;
@@ -63,11 +61,9 @@ namespace MapTest.iOS {
                 routePoints.Add (point);
             }
 
-            //SHOULD WORK UNTIL HERE MAYBE DRAWING THE POLYGON IS NOT WORKING BECAUSE OF MISSING iOS SKILLS
-
-            MKPolygon hotelOverlay = MKPolygon.FromCoordinates (routePoints.ToArray ());
-
-            map.AddOverlay (hotelOverlay);
+            var line = MKPolyline.FromCoordinates (routePoints.ToArray ());
+            map.AddOverlay (line);
+            //map.SetVisibleMapRect(line.BoundingMapRect, false);
 
             if (UIDevice.CurrentDevice.CheckSystemVersion (8, 0))
             {
@@ -81,33 +77,24 @@ namespace MapTest.iOS {
             // Release any cached data, images, etc that aren't in use.
         }
 
-    }
-
-
-    class MapViewDelegate : MKMapViewDelegate {
-
-        public override MKOverlayRenderer OverlayRenderer (MKMapView mapView, IMKOverlay overlay)
+        public MKOverlayRenderer OverlayRenderer (MKMapView mapView, IMKOverlay overlay)
         {
             if (overlay is MKTileOverlay)
             {
                 var renderer = new MKTileOverlayRenderer ((MKTileOverlay) overlay);
                 return renderer;
             }
-            else
+            else if (overlay is MKPolyline)
             {
-                return null;
+                MKPolylineRenderer polylineRenderer = new MKPolylineRenderer((MKPolyline)overlay);
+                polylineRenderer.FillColor = UIColor.Blue;
+                polylineRenderer.StrokeColor = UIColor.Blue;
+                polylineRenderer.LineWidth = 5f;
+                return polylineRenderer;
             }
-        }
-
-        public override MKOverlayView GetViewForOverlay (MKMapView mapView, IMKOverlay overlay)
-        {
-            // return a view for the polygon
-            MKPolygon polygon = overlay as MKPolygon;
-            MKPolygonView polygonView = new MKPolygonView (polygon);
-            polygonView.FillColor = UIColor.Blue;
-            polygonView.StrokeColor = UIColor.Red;
-            return polygonView;
+            return null;
         }
 
     }
+
 }
