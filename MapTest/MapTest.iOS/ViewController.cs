@@ -49,10 +49,8 @@ namespace MapTest.iOS {
             // Disable rotation programatically because value of designer is somehow ignored
             map.RotateEnabled = false;
 
-            Assembly assembly = Assembly.GetExecutingAssembly ();
-            Stream file = assembly.GetManifestResourceStream ("MapTest.iOS.Resources.map_01.pbf");
 
-            MyClass.Do (file);
+            MyClass.GetRoute ();
 
 
             foreach (GeoLocation w in MyClass.locations)
@@ -84,17 +82,17 @@ namespace MapTest.iOS {
                 var renderer = new MKTileOverlayRenderer ((MKTileOverlay) overlay);
                 return renderer;
             }
-            else if (overlay is MKPolyline)
-            {
-                MKPolylineRenderer polylineRenderer = new MKPolylineRenderer((MKPolyline)overlay);
-                polylineRenderer.FillColor = UIColor.Blue;
-                polylineRenderer.StrokeColor = UIColor.Blue;
-                polylineRenderer.LineWidth = 5f;
-                return polylineRenderer;
-            }
+            else
+                if (overlay is MKPolyline)
+                {
+                    MKPolylineRenderer polylineRenderer = new MKPolylineRenderer ((MKPolyline) overlay);
+                    polylineRenderer.FillColor = UIColor.Blue;
+                    polylineRenderer.StrokeColor = UIColor.Blue;
+                    polylineRenderer.LineWidth = 5f;
+                    return polylineRenderer;
+                }
             return null;
         }
 
     }
-
 }

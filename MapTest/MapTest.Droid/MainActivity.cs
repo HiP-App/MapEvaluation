@@ -53,15 +53,8 @@ namespace MapTest.Droid {
 
             mapView.Invalidate ();
 
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            Stream file = assembly.GetManifestResourceStream("MapTest.Droid.Resources.map_01.pbf");
 
-            MyClass.Do (file);
-
-           /* using (var stream = new FileInfo (@"mnt/shared/TMP/map_01.pbf").OpenRead ())
-            {
-                MyClass.Do (stream);
-            }*/
+            MyClass.GetRoute ();
 
 
             foreach (GeoLocation w in MyClass.locations)

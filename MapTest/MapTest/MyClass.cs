@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Itinero;
 using Itinero.IO.Osm;
 using Itinero.LocalGeo;
@@ -14,12 +15,16 @@ namespace MapTest
 
         public static IList<GeoLocation> locations = new Reminiscence.Collections.List<GeoLocation>();
 
-        public static void Do (Stream stream)
+        public static void GetRoute ()
         {
             var routerDb = new RouterDb();
             var router = new Router(routerDb);
 
-            routerDb.LoadOsmData (stream, Vehicle.Pedestrian);
+            //LOad pbf inside pcl
+            var assembly = typeof (MapTest.MyClass).GetTypeInfo ().Assembly;
+            Stream s = assembly.GetManifestResourceStream("MapTest.map_01.pbf");
+
+            routerDb.LoadOsmData (s, Vehicle.Pedestrian);
             // calculate a route.
             var route = router.Calculate(Vehicle.Pedestrian.Fastest(),
                 51.72070116f, 8.74880791f, 51.71584899f, 8.75824928f);
